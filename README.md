@@ -39,6 +39,9 @@ This project utilizes [`next/font`](https://nextjs.org/docs/basic-features/font-
 ### Time Taken
 The total time taken from starting to completing the task was approximately 15 hours.
 
+### Limitation
+It is desktop only and not supported in mobile view.
+
 
 ### Deployment
 Deployed to: [https://tippsy-app.vercel.app/](https://tippsy-app.vercel.app/)

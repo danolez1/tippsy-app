@@ -21,8 +21,11 @@
 *.pem
 
 # Environ variable
-.env
+*.env
 /.env
+*.env.example
+*.env.local
+*.env.staging
 
 # debug
 npm-debug.log*
