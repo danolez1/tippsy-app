@@ -1,3 +1,4 @@
+"use client";
 import { Card, Flex } from "antd";
 import Meta from "antd/es/card/Meta";
 import Title from "antd/es/typography/Title";
@@ -21,7 +22,7 @@ const features = [
 export default function Home() {
   return (
     <main>
-      <Title>TippsySake fullstack developer code challenge</Title>
+      <Title>Features</Title>
       <Flex gap={16}>
         {features.map((feature) => (
           <Card

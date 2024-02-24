@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TippsySake Budgeting Application
+
+Welcome to the TippsySake Budgeting Application development challenge! In this challenge, you will be tasked with building a full-stack budgeting application using NextJS and Typescript. The application should fulfill specific requirements outlined below, and you will have one week to complete the challenge.
+
+## Project Overview
+
+### Challenge Requirements
+- Build a budgeting application using NextJS and Typescript.
+- Utilize any tools/libraries for implementation, but ensure the application is written in NextJS.
+- The application must include features such as charge input form, category creation form, spending chart, charge and category tables with pagination and sorting, and CRUD operations for charges and categories.
+- Data persistence is required through some form of API or database integration.
+
+### Evaluation Criteria
+- Code quality, style, and architecture.
+- UI/UX design considerations.
+- Maintainability of the codebase.
 
 ## Getting Started
 
-First, run the development server:
+To start the development server, follow these steps:
+
+DB Used: Appwrite
+Rename `.env.sample` to `.env` and populate with your API keys
+
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can begin editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project utilizes [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## About the Challenge
 
-To learn more about Next.js, take a look at the following resources:
+### Time Taken
+The total time taken from starting to completing the task was approximately 15 hours.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Deployment
+Deployed to: []()

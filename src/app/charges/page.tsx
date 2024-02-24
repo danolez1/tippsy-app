@@ -22,9 +22,14 @@ import Title from "antd/es/typography/Title";
 import { format } from "date-fns";
 import dayjs from "dayjs";
 import _ from "lodash";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
-import Chart from "react-apexcharts";
+import { Props } from "react-apexcharts";
 import toast from "react-hot-toast";
+const ApexChart = dynamic<Props>(() => import("react-apexcharts"), {
+  ssr: false,
+  loading: () => null,
+});
 
 type ChargeForm = Pick<Charge, "amount" | "category" | "date" | "note">;
 
@@ -134,7 +139,7 @@ export default function Page() {
                             {" on "}
                             {format(
                               new Date(record.date as string),
-                              "MMM d, y"
+                              "MMM d, y",
                             )}
                           </strong>
                           ?
@@ -192,7 +197,7 @@ export default function Page() {
     },
     xaxis: {
       categories: charges.list.map((charge) =>
-        format(new Date(charge.date as string), "MMM d, y")
+        format(new Date(charge.date as string), "MMM d, y"),
       ),
     },
   };
@@ -200,7 +205,7 @@ export default function Page() {
     return {
       name: category.name,
       data: charges.list.map((charge) =>
-        charge.category == category.$id ? charge.amount : null
+        charge.category == category.$id ? charge.amount : null,
       ),
       color: category.color,
     };
@@ -216,7 +221,7 @@ export default function Page() {
           </Button>
         </Flex>
 
-        <Chart
+        <ApexChart
           options={options}
           series={series}
           type="line"

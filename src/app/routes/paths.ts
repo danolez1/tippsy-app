@@ -1,5 +1,5 @@
 export const paths = {
-    index: '/',
-    charges: '/charges',
-    category: '/category'
-}
+  index: "/",
+  charges: "/charges",
+  category: "/category",
+};

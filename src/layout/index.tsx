@@ -7,7 +7,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   TagOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Flex, Layout, Menu, Popover, theme } from "antd";
 import Title from "antd/es/typography/Title";
