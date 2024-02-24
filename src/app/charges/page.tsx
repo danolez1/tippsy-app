@@ -139,7 +139,7 @@ export default function Page() {
                             {" on "}
                             {format(
                               new Date(record.date as string),
-                              "MMM d, y",
+                              "MMM d, y"
                             )}
                           </strong>
                           ?
@@ -196,16 +196,20 @@ export default function Page() {
       },
     },
     xaxis: {
-      categories: charges.list.map((charge) =>
-        format(new Date(charge.date as string), "MMM d, y"),
-      ),
+      categories: charges.list
+        .sort(
+          (a, b) =>
+            new Date(a.date as string).getTime() -
+            new Date(b.date as string).getTime()
+        )
+        .map((charge) => format(new Date(charge.date as string), "MMM d, y")),
     },
   };
   const series = categories.list.map((category) => {
     return {
       name: category.name,
       data: charges.list.map((charge) =>
-        charge.category == category.$id ? charge.amount : null,
+        charge.category == category.$id ? charge.amount : null
       ),
       color: category.color,
     };
