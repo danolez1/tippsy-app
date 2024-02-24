@@ -41,4 +41,4 @@ The total time taken from starting to completing the task was approximately 15 h
 
 
 ### Deployment
-Deployed to: []()
+Deployed to: [https://tippsy-app.vercel.app/](https://tippsy-app.vercel.app/)
