@@ -152,10 +152,15 @@ export default function Page() {
       <Flex dir="column" vertical gap={16}>
         <Flex justify="space-between">
           <Title level={4}>Category</Title>
-             <Button icon={<PlusOutlined />} type="primary" onClick={()=>{
-form.resetFields();
-handleOpen();
-}}> Add Category
+          <Button
+            icon={<PlusOutlined />}
+            type="primary"
+            onClick={() => {
+              form.resetFields();
+              handleOpen();
+            }}
+          >
+            Add Category
           </Button>
         </Flex>
 
