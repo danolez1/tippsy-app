@@ -19,7 +19,7 @@ Welcome to the TippsySake Budgeting Application development challenge! In this c
 
 To start the development server, follow these steps:
 
-DB Used: Appwrite 
+DB Used: **Appwrite** 
 
 Rename `.env.sample` to `.env` and populate with your API keys
 
