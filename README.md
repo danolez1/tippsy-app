@@ -19,7 +19,8 @@ Welcome to the TippsySake Budgeting Application development challenge! In this c
 
 To start the development server, follow these steps:
 
-DB Used: Appwrite
+DB Used: Appwrite 
+
 Rename `.env.sample` to `.env` and populate with your API keys
 
 
@@ -40,7 +41,7 @@ This project utilizes [`next/font`](https://nextjs.org/docs/basic-features/font-
 The total time taken from starting to completing the task was approximately 15 hours.
 
 ### Limitation
-It is desktop only and not supported in mobile view.
+It only supports desktop and tablet and not recommended/supported in mobile view due to UX in handling charts and tables.
 
 
 ### Deployment
