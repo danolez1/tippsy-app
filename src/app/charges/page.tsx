@@ -224,7 +224,10 @@ export default function Page() {
       <Flex dir="column" vertical gap={16}>
         <Flex justify="space-between">
           <Title level={4}>Charges</Title>
-          <Button icon={<PlusOutlined />} type="primary" onClick={handleOpen}>
+          <Button icon={<PlusOutlined />} type="primary" onClick={()=>{
+form.resetFields();
+handleOpen();
+}}>
             Add Charges
           </Button>
         </Flex>
