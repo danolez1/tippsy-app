@@ -1,6 +1,6 @@
 "use client";
 import { useModal } from "@/hooks/use-modal";
-import { Charge, useStore } from "@/hooks/use-store";
+import { Charge, ChargeForm, useStore } from "@/hooks/use-store";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -19,7 +19,7 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Title from "antd/es/typography/Title";
-import { format } from "date-fns";
+import { format, compareAsc } from "date-fns";
 import dayjs from "dayjs";
 import _ from "lodash";
 import dynamic from "next/dynamic";
@@ -30,8 +30,6 @@ const ApexChart = dynamic<Props>(() => import("react-apexcharts"), {
   ssr: false,
   loading: () => null,
 });
-
-type ChargeForm = Pick<Charge, "amount" | "category" | "date" | "note">;
 
 const initialValues: ChargeForm = {
   amount: 0,
@@ -139,7 +137,7 @@ export default function Page() {
                             {" on "}
                             {format(
                               new Date(record.date as string),
-                              "MMM d, y",
+                              "MMM d, y"
                             )}
                           </strong>
                           ?
@@ -177,9 +175,8 @@ export default function Page() {
   ];
 
   useEffect(() => {
-    if (charges.loading == false && charges.list.length == 0) loadCharges();
-    if (categories.loading == false && categories.list.length == 0)
-      loadCategories();
+    if (!charges.loading && charges.list.length == 0) loadCharges();
+    if (!categories.loading && categories.list.length == 0) loadCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadCharges]);
 
@@ -187,6 +184,40 @@ export default function Page() {
     handleClose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charges.loading, closeModal]);
+
+  const sortByDate = <T extends Charge>(a: T, b: T) =>
+    compareAsc(new Date(a.date as string), new Date(b.date as string));
+
+  const groupedCharges = charges.list
+    .toSorted(sortByDate)
+    .reduce((acc: Record<string, Record<string, Charge[]>>, charge) => {
+      const chargeDate = dayjs(charge.date).format("YYYY-MM-DD");
+      acc[charge.category] = acc[charge.category] || {};
+      acc[charge.category][chargeDate] = acc[charge.category][chargeDate] || [];
+      acc[charge.category][chargeDate].push(charge);
+      return acc;
+    }, {});
+
+  const reducedCharges = Object.entries(groupedCharges).map(
+    ([category, dates]) => {
+      const totalAmountByDate = Object.entries(dates).map(([date, charges]) => {
+        const totalAmount = charges.reduce(
+          (sum, charge) => sum + charge.amount,
+          0
+        );
+        return {
+          date,
+          totalAmount,
+          charges,
+        };
+      });
+
+      return {
+        category,
+        totalAmountByDate,
+      };
+    }
+  );
 
   const options = {
     chart: {
@@ -196,28 +227,26 @@ export default function Page() {
       },
     },
     xaxis: {
-      categories: charges.list
-        .sort(
-          (a, b) =>
-            new Date(a.date as string).getTime() -
-            new Date(b.date as string).getTime(),
+      categories: Array.from(
+        new Set(
+          charges.list
+            .toSorted(sortByDate)
+            .map((charge) =>
+              format(new Date(charge.date as string), "MMM d, y")
+            )
         )
-        .map((charge) => format(new Date(charge.date as string), "MMM d, y")),
+      ),
     },
   };
-  const series = categories.list.map((category) => {
+
+  const series = reducedCharges.map((charges) => {
+    const category = categories.list.find(
+      (category) => category.$id == charges.category
+    );
     return {
-      name: category.name,
-      data: charges.list
-        .sort(
-          (a, b) =>
-            new Date(a.date as string).getTime() -
-            new Date(b.date as string).getTime(),
-        )
-        .map((charge) =>
-          charge.category == category.$id ? charge.amount : null,
-        ),
-      color: category.color,
+      name: category?.name,
+      data: charges.totalAmountByDate.map((amount) => amount.totalAmount),
+      color: category?.color,
     };
   });
 

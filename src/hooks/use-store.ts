@@ -12,6 +12,8 @@ export interface Charge extends Models.Document {
   date: Date | Dayjs | string;
 }
 
+export type ChargeForm = Pick<Charge, "amount" | "category" | "date" | "note">;
+
 export interface Category extends Models.Document {
   name: string;
   color: string;
@@ -51,14 +53,14 @@ interface GlobalAction {
   loadCharges: () => Promise<void>;
   addCategory: (values: { name: string; color: Color }) => Promise<void>;
   addCharge: (
-    values: Pick<Charge, "amount" | "category" | "date" | "note">,
+    values: ChargeForm,
   ) => Promise<void>;
   updateCategory: (values: {
     name: string;
     color: Color | string;
   }) => Promise<void>;
   updateCharge: (
-    values: Pick<Charge, "amount" | "category" | "date" | "note">,
+    values: ChargeForm
   ) => Promise<void>;
   deleteCategory: () => Promise<void>;
   deleteCharge: () => Promise<void>;

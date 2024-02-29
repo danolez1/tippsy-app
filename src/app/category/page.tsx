@@ -57,13 +57,7 @@ export default function Page() {
       key: "color",
       dataIndex: "color",
       render: (_, { color, name }) => (
-        <>
-          <Skeleton.Avatar
-            size={16}
-            active
-            style={{ backgroundColor: color }}
-          />
-        </>
+        <Skeleton.Avatar size={16} active style={{ backgroundColor: color }} />
       ),
     },
     {
@@ -100,9 +94,8 @@ export default function Page() {
                         <p className="mt-1 text-sm text-gray-500">
                           Are you sure you want to delete{" "}
                           <strong style={{ color: record.color }}>
-                            {record.name}
+                            {record.name}?
                           </strong>
-                          ?
                         </p>
                       </div>
                     </div>
@@ -137,7 +130,7 @@ export default function Page() {
   ];
 
   useEffect(() => {
-    if (category.loading == false && category.list.length == 0)
+    if (!category.loading && category.list.length == 0)
       loadCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadCategories]);
