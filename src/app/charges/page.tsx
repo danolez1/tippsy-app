@@ -252,7 +252,7 @@ export default function Page() {
 
     charges.totalAmountByDate.forEach((amount) => {
       const index = dates.indexOf(amount.date);
-      if (index > 0) data[index] = amount.totalAmount;
+      if (index > -1) data[index] = amount.totalAmount;
     });
 
     return {
