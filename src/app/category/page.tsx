@@ -130,8 +130,7 @@ export default function Page() {
   ];
 
   useEffect(() => {
-    if (!category.loading && category.list.length == 0)
-      loadCategories();
+    if (!category.loading && category.list.length == 0) loadCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadCategories]);
 

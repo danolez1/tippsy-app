@@ -137,7 +137,7 @@ export default function Page() {
                             {" on "}
                             {format(
                               new Date(record.date as string),
-                              "MMM d, y"
+                              "MMM d, y",
                             )}
                           </strong>
                           ?
@@ -189,7 +189,7 @@ export default function Page() {
     compareAsc(new Date(a.date as string), new Date(b.date as string));
 
   const groupedCharges = charges.list
-    .toSorted(sortByDate)
+    .sort(sortByDate)
     .reduce((acc: Record<string, Record<string, Charge[]>>, charge) => {
       const chargeDate = dayjs(charge.date).format("YYYY-MM-DD");
       acc[charge.category] = acc[charge.category] || {};
@@ -203,7 +203,7 @@ export default function Page() {
       const totalAmountByDate = Object.entries(dates).map(([date, charges]) => {
         const totalAmount = charges.reduce(
           (sum, charge) => sum + charge.amount,
-          0
+          0,
         );
         return {
           date,
@@ -216,7 +216,7 @@ export default function Page() {
         category,
         totalAmountByDate,
       };
-    }
+    },
   );
 
   const options = {
@@ -230,18 +230,18 @@ export default function Page() {
       categories: Array.from(
         new Set(
           charges.list
-            .toSorted(sortByDate)
+            .sort(sortByDate)
             .map((charge) =>
-              format(new Date(charge.date as string), "MMM d, y")
-            )
-        )
+              format(new Date(charge.date as string), "MMM d, y"),
+            ),
+        ),
       ),
     },
   };
 
   const series = reducedCharges.map((charges) => {
     const category = categories.list.find(
-      (category) => category.$id == charges.category
+      (category) => category.$id == charges.category,
     );
     return {
       name: category?.name,

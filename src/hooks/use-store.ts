@@ -52,16 +52,12 @@ interface GlobalAction {
   loadCategories: () => Promise<void>;
   loadCharges: () => Promise<void>;
   addCategory: (values: { name: string; color: Color }) => Promise<void>;
-  addCharge: (
-    values: ChargeForm,
-  ) => Promise<void>;
+  addCharge: (values: ChargeForm) => Promise<void>;
   updateCategory: (values: {
     name: string;
     color: Color | string;
   }) => Promise<void>;
-  updateCharge: (
-    values: ChargeForm
-  ) => Promise<void>;
+  updateCharge: (values: ChargeForm) => Promise<void>;
   deleteCategory: () => Promise<void>;
   deleteCharge: () => Promise<void>;
   selectCharge: (data: Charge) => void;
