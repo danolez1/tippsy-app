@@ -19,9 +19,9 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Title from "antd/es/typography/Title";
-import { format, compareAsc } from "date-fns";
+import { compareAsc, format } from "date-fns";
 import dayjs from "dayjs";
-import _ from "lodash";
+import _, { throttle } from "lodash";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { Props } from "react-apexcharts";
@@ -137,7 +137,7 @@ export default function Page() {
                             {" on "}
                             {format(
                               new Date(record.date as string),
-                              "MMM d, y",
+                              "MMM d, y"
                             )}
                           </strong>
                           ?
@@ -175,8 +175,11 @@ export default function Page() {
   ];
 
   useEffect(() => {
-    if (!charges.loading && charges.list.length == 0) loadCharges();
-    if (!categories.loading && categories.list.length == 0) loadCategories();
+    throttle(() => {
+      if (!charges.loading && charges.list.length == 0) loadCharges();
+      if (!categories.loading && categories.list.length == 0) loadCategories();
+    }, 1000)();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadCharges]);
 
@@ -203,7 +206,7 @@ export default function Page() {
       const totalAmountByDate = Object.entries(dates).map(([date, charges]) => {
         const totalAmount = charges.reduce(
           (sum, charge) => sum + charge.amount,
-          0,
+          0
         );
         return {
           date,
@@ -216,7 +219,17 @@ export default function Page() {
         category,
         totalAmountByDate,
       };
-    },
+    }
+  );
+
+  const dates = Array.from(
+    new Set(
+      reducedCharges
+        .map((charge) =>
+          charge.totalAmountByDate.map((charges) => charges.date)
+        )
+        .flat()
+    )
   );
 
   const options = {
@@ -227,25 +240,24 @@ export default function Page() {
       },
     },
     xaxis: {
-      categories: Array.from(
-        new Set(
-          charges.list
-            .sort(sortByDate)
-            .map((charge) =>
-              format(new Date(charge.date as string), "MMM d, y"),
-            ),
-        ),
-      ),
+      categories: dates.map((date) => format(new Date(date), "MMM d, y")),
     },
   };
 
   const series = reducedCharges.map((charges) => {
     const category = categories.list.find(
-      (category) => category.$id == charges.category,
+      (category) => category.$id == charges.category
     );
+    const data = Array(dates.length).fill(0);
+
+    charges.totalAmountByDate.forEach((amount) => {
+      const index = dates.indexOf(amount.date);
+      if (index > 0) data[index] = amount.totalAmount;
+    });
+
     return {
       name: category?.name,
-      data: charges.totalAmountByDate.map((amount) => amount.totalAmount),
+      data,
       color: category?.color,
     };
   });

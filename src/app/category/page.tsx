@@ -17,7 +17,7 @@ import {
   TableProps,
 } from "antd";
 import Title from "antd/es/typography/Title";
-import _ from "lodash";
+import _, { throttle } from "lodash";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -130,7 +130,9 @@ export default function Page() {
   ];
 
   useEffect(() => {
-    if (!category.loading && category.list.length == 0) loadCategories();
+    throttle(() => {
+      if (!category.loading && category.list.length == 0) loadCategories();
+    }, 1000)();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadCategories]);
 
