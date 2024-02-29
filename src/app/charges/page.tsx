@@ -19,7 +19,7 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Title from "antd/es/typography/Title";
-import { compareAsc, format } from "date-fns";
+import { addDays, compareAsc, format } from "date-fns";
 import dayjs from "dayjs";
 import _, { throttle } from "lodash";
 import dynamic from "next/dynamic";
@@ -240,7 +240,9 @@ export default function Page() {
       },
     },
     xaxis: {
-      categories: dates.map((date) => format(new Date(date), "MMM d, y")),
+      categories: dates.map((date) =>
+        format(addDays(new Date(date), 1), "MMM d, y")
+      ),
     },
   };
 
